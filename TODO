@@ -1,0 +1,25 @@
+prvi video----------------
+
+
+run heroku with heroku local
+
+--- > to ne moze za windows, mora ici 
+
+heroku local web -f Procfile.windows
+
+generisati requiremnems fajl ne ide pisanjem, (to ide u prvi req.in fajl)
+
+vec se koristi pip-compile file=req.txt req.in 
+
+--------------------------------------------------------
+
+drugi video 
+
+12factor.net heroku koristi taj config tako da i nama treba
+
+
+-------------------------------------------
+
+#41
+
+email backend, auth beckend sa bloga willa vincenta

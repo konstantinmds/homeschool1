@@ -31,7 +31,6 @@ environ.Env.read_env(env_file)
 
 # False if not in os.environ
 DEBUG = env('DEBUG')
-print(DEBUG)
 
 
 
@@ -40,9 +39,9 @@ print(DEBUG)
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
+print(SECRET_KEY)
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
 
 ALLOWED_HOSTS = []
 
@@ -56,13 +55,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'homeschool.users',
-    'homeschool.schools'
-
-    
+    'homeschool.schools',    
 ]
 
 MIDDLEWARE = [
@@ -86,7 +84,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -112,6 +110,16 @@ DATABASES = {
     }
 }
 
+#ins
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+#ins
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",
+    "allauth.account.auth_backends.AuthenticationBackend",
+)
+
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -132,6 +140,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'users.User'
+LOGIN_REDIRECT_URL = 'app'
+
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.1/topics/i18n/
@@ -147,9 +157,27 @@ USE_L10N = True
 USE_TZ = True
 
 
+# django.contrib.sites  single app can target different websites  same DB and different domaing to serve to, explore more
+SITE_ID = 1
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#django allauth
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_SIGNGUP_PASSWORD_ENTER_TWICE = False
+ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_UNIQUE_EMAIL = True
+
+
+
+ACCOUNT_LOGOUT_REDIRECT_URL = 'app'
+LOGOUT_REDIRECT_URL = 'app'
+
 
 django_heroku.settings(locals())
